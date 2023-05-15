@@ -5,7 +5,7 @@ let montoConIntereses= 0;
 let interes= 0;
 let mensaje="";
 
-//Funion 1
+//Función 1
 const calcularInteres = () =>{
 
     //Ciclo condicional
@@ -28,7 +28,7 @@ const calcularInteres = () =>{
     }
 }
 
-//Funion 2
+//Función 2
 const calcularMontoConInteres =() =>{
     montoConIntereses=monto+(monto*interes/100)
 }
