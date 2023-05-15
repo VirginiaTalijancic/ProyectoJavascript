@@ -1,0 +1,22 @@
+.titulo{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    color: green;
+}
+
+.botonResultado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    color: aliceblue;
+    border-radius: 6px;
+    font-size: 18px;
+    
+}
+
+.botonResultado:hover{
+    background-color:green ;
+    color: black;
+}
