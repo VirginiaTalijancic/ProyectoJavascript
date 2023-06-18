@@ -44,71 +44,98 @@
 // }
 
 
+document.addEventListener('DOMContentLoaded', function() {
+  const products = [
+    { name: 'iPhone X', price: 999, image: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F61QwvBsoxfL._AC_UF350%2C350_QL80_.jpg&tbnid=vloa89k5DoNyEM&vet=12ahUKEwj015T5isn_AhVKppUCHVwcDwUQMygLegUIARD5AQ..i&imgrefurl=https%3A%2F%2Fwww.amazon.com.mx%2FApple-iPhone-desbloqueado-Refurbished-espacial%2Fdp%2FB07757R58W&docid=NZQBl28OAN9a0M&w=350&h=282&q=iphone%20x&ved=2ahUKEwj015T5isn_AhVKppUCHVwcDwUQMygLegUIARD5AQ' },
+    { name: 'iPhone XR', price: 799, image: 'iphone-xr.jpg' },
+    { name: 'iPhone 11', price: 699, image: 'iphone-11.jpg' },
+    { name: 'iPhone 12', price: 799, image: 'iphone-12.jpg' }
+  ];
 
-//Builder
+  const productList = document.getElementById('product-list');
 
-class Celular {
-  constructor(id, brand, model, price, stock) {
-    this.id = id;
-    this.brand = brand;
-    this.model = model;
-    this.price = price;
-    this.stock = stock;
-  }
-}
+  products.forEach(function(product) {
+    const card = document.createElement('div');
+    card.classList.add('card', 'col-md-3', 'm-2');
 
-class CelularsHandler{
-  constructor(celulars) {
-    this.celulars = celulars;
-  }
+    const image = document.createElement('img');
+    image.src = product.image;
+    image.classList.add('card-img-top');
+    card.appendChild(image);
 
-  getCelularById(id) {
-    const result = this.celulars.find((celular) => {
-      return celular.id === id;
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+    card.appendChild(cardBody);
+
+    const title = document.createElement('h5');
+    title.textContent = product.name;
+    title.classList.add('card-title');
+    cardBody.appendChild(title);
+
+    const price = document.createElement('p');
+    price.textContent = `$${product.price}`;
+    price.classList.add('card-text');
+    cardBody.appendChild(price);
+
+    const addToCartBtn = document.createElement('button');
+    addToCartBtn.textContent = 'Agregar al carrito';
+    addToCartBtn.classList.add('btn', 'btn-primary');
+    addToCartBtn.addEventListener('click', function() {
+      addToCart(product);
     });
+    cardBody.appendChild(addToCartBtn);
 
-    // Result validation
-    if (result) {
-      return result;
-    } else {
-      return 'Invalid or missing ID';
+    productList.appendChild(card);
+  });
+
+  // Carrito de compras
+  const cartItems = document.getElementById('cart-items');
+  const checkoutBtn = document.getElementById('checkout-btn');
+
+  // Array para almacenar los productos del carrito
+  let cart = [];
+
+  // Función para agregar un producto al carrito
+  function addToCart(product) {
+    cart.push(product);
+    saveCart();
+    displayCart();
+  }
+
+  // Función para guardar el carrito en localStorage
+  function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  // Función para cargar el carrito desde localStorage
+  function loadCart() {
+    const cartData = localStorage.getItem('cart');
+    if (cartData) {
+      cart = JSON.parse(cartData);
+      displayCart();
     }
   }
 
-  getCelularByModel(model) {
-    const result = this.celulars.find((celular) => {
-      return celular.model === model;
+  // Función para mostrar los productos del carrito en el DOM
+  function displayCart() {
+    cartItems.innerHTML = '';
+    cart.forEach(function(product) {
+      const li = document.createElement('li');
+      li.textContent = product.name;
+      cartItems.appendChild(li);
     });
-    if (result) {
-      return result;
-    } else {
-      return 'Bad or missing model';
-    }
   }
 
-}
+  // Función para finalizar la compra
+  function checkout() {
+    cart = [];
+    saveCart();
+    displayCart();
+    alert('¡Gracias por tu compra!');
+  }
 
-// Celular array
-const celulars = [];
-celulars.push( new Celular(1, 'Apple', 'iPhone11', 600, 456 ));
-celulars.push( new Celular(2, 'Apple', 'iPhone11 Pro', 700, 287 ));
-celulars.push( new Celular(3, 'Apple', 'iPhone12', 700, 123 ));
-celulars.push( new Celular(4, 'Apple', 'iPhone12 Pro', 800, 78 ));
-celulars.push( new Celular(5, 'Apple', 'iPhone12 Pro Max', 850, 67 ));
-celulars.push( new Celular(6, 'Apple', 'iPhone13', 850, 366 ));
-celulars.push( new Celular(7, 'Apple', 'iPhone13 Pro', 900, 47 ));
-celulars.push( new Celular(8, 'Apple', 'iPhone13 Pro Max', 950, 356 ));
-celulars.push( new Celular(9, 'Apple', 'iPhone14', 900, 1256 ));
-celulars.push( new Celular(10, 'Apple', 'iPhone14 Pro', 1000, 4546 ));
-celulars.push( new Celular(11, 'Apple', 'iPhone14 Pro Max', 1200, 8456 ));
+  checkoutBtn.addEventListener('click', checkout);
 
-
-// console.log(celulars);
-
-const celularsHandler = new CelularsHandler(celulars);
-
-const model = prompt('Ingrese el modelo:');
-
-alert(JSON.stringify(celularsHandler.getCelularByModel(model)));
-
-console.log(celulars);
+  // Cargar el carrito al cargar la página
+  loadCart();
+});
