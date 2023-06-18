@@ -43,8 +43,8 @@
 //     alert("Monto total con intereses: " + montoConIntereses)
 // }
 
-
 document.addEventListener('DOMContentLoaded', function() {
+  // Array de objetos que representan los modelos de iPhones
   const products = [
     { name: 'iPhone X', price: 999, image: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F61QwvBsoxfL._AC_UF350%2C350_QL80_.jpg&tbnid=vloa89k5DoNyEM&vet=12ahUKEwj015T5isn_AhVKppUCHVwcDwUQMygLegUIARD5AQ..i&imgrefurl=https%3A%2F%2Fwww.amazon.com.mx%2FApple-iPhone-desbloqueado-Refurbished-espacial%2Fdp%2FB07757R58W&docid=NZQBl28OAN9a0M&w=350&h=282&q=iphone%20x&ved=2ahUKEwj015T5isn_AhVKppUCHVwcDwUQMygLegUIARD5AQ' },
     { name: 'iPhone XR', price: 799, image: 'iphone-xr.jpg' },
@@ -52,9 +52,20 @@ document.addEventListener('DOMContentLoaded', function() {
     { name: 'iPhone 12', price: 799, image: 'iphone-12.jpg' }
   ];
 
-  const productList = document.getElementById('product-list');
+  const cart = []; // Array para almacenar los productos del carrito
 
-  products.forEach(function(product) {
+  // Función para generar las cards de los productos en el DOM
+  function renderProducts() {
+    const productList = document.getElementById('product-list');
+
+    products.forEach(function(product) {
+      const card = createCard(product);
+      productList.appendChild(card);
+    });
+  }
+
+  // Función para crear una card de producto
+  function createCard(product) {
     const card = document.createElement('div');
     card.classList.add('card', 'col-md-3', 'm-2');
 
@@ -85,15 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     cardBody.appendChild(addToCartBtn);
 
-    productList.appendChild(card);
-  });
-
-  // Carrito de compras
-  const cartItems = document.getElementById('cart-items');
-  const checkoutBtn = document.getElementById('checkout-btn');
-
-  // Array para almacenar los productos del carrito
-  let cart = [];
+    return card;
+  }
 
   // Función para agregar un producto al carrito
   function addToCart(product) {
@@ -111,14 +115,16 @@ document.addEventListener('DOMContentLoaded', function() {
   function loadCart() {
     const cartData = localStorage.getItem('cart');
     if (cartData) {
-      cart = JSON.parse(cartData);
+      cart.push(...JSON.parse(cartData));
       displayCart();
     }
   }
 
   // Función para mostrar los productos del carrito en el DOM
   function displayCart() {
+    const cartItems = document.getElementById('cart-items');
     cartItems.innerHTML = '';
+
     cart.forEach(function(product) {
       const li = document.createElement('li');
       li.textContent = product.name;
@@ -126,14 +132,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Función para calcular el precio total del carrito
+  function calculateTotal() {
+    const total = cart.reduce((sum, product) => sum + product.price, 0);
+    document.getElementById('total-price').textContent = `$${total}`;
+  }
+
   // Función para finalizar la compra
   function checkout() {
-    cart = [];
+    cart.length = 0; // Vaciar el carrito
     saveCart();
     displayCart();
+    calculateTotal();
     alert('¡Gracias por tu compra!');
   }
 
+  // Generar los productos en el DOM
+  renderProducts();
+
+  // Asociar evento al botón de finalizar compra
+  const checkoutBtn = document.getElementById('checkout-btn');
   checkoutBtn.addEventListener('click', checkout);
 
   // Cargar el carrito al cargar la página
