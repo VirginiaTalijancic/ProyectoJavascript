@@ -1,55 +1,15 @@
-// //Etapa 1- Entrada de datos
-// let monto= parseInt(prompt("Ingrese el monto"));
-// let cuotas= parseInt(prompt("Ingrese la cantidad de cuotas: 3/6/12"))
-// let montoConIntereses= 0;
-// let interes= 0;
-// let mensaje="";
-
-// //Función 1
-// const calcularInteres = () =>{
-
-//     //Ciclo condicional
-//     if (cuotas===3) { 
-//         interes=20;
-//         mensaje= "Los intereses son del 20%"
-//     } else if (cuotas===6) {
-//         interes=30;
-//         mensaje="Los intereses son del 30%"
-//     } else if (cuotas===12) { 
-//         interes=40;   
-//         mensaje="Los intereses son del 40%"
-//     } 
-
-//     //Ciclo repetitivo
-//     while (cuotas!=3 && cuotas!=6 && cuotas!=12){
-//         interes=0;
-//         mensaje="Ingrese un numero de cuotas valido: 3, 6, 12";
-//         return
-//     }
-// }
-
-// //Función 2
-// const calcularMontoConInteres =() =>{
-//     montoConIntereses=monto+(monto*interes/100)
-// }
-
-// calcularInteres();
-// calcularMontoConInteres();
-
-// if (interes=== 0) {
-//     alert(mensaje)
-// } else {
-//     alert(mensaje)
-//     alert("Monto total con intereses: " + montoConIntereses)
-// }
-
 document.addEventListener('DOMContentLoaded', function() {
   // Array de objetos que representan los modelos de iPhones
   const products = [
-    { name: 'iPhone X', price: 999, image: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F61QwvBsoxfL._AC_UF350%2C350_QL80_.jpg&tbnid=vloa89k5DoNyEM&vet=12ahUKEwj015T5isn_AhVKppUCHVwcDwUQMygLegUIARD5AQ..i&imgrefurl=https%3A%2F%2Fwww.amazon.com.mx%2FApple-iPhone-desbloqueado-Refurbished-espacial%2Fdp%2FB07757R58W&docid=NZQBl28OAN9a0M&w=350&h=282&q=iphone%20x&ved=2ahUKEwj015T5isn_AhVKppUCHVwcDwUQMygLegUIARD5AQ' },
-    { name: 'iPhone XR', price: 799, image: 'iphone-xr.jpg' },
-    { name: 'iPhone 11', price: 699, image: 'iphone-11.jpg' },
-    { name: 'iPhone 12', price: 799, image: 'iphone-12.jpg' }
+    { name: 'iPhone X', price: 560, image: 'https://www.itzoo.sk/resize/e/440/440/files/produkty---hlavne-foto/iphone-xs-64-biely-itzoo.jpg' },
+    { name: 'iPhone XR', price: 600, image: 'https://http2.mlstatic.com/D_NQ_NP_2X_641854-MLA46544656693_062021-F.webp' },
+    { name: 'iPhone 11', price: 690, image: 'https://http2.mlstatic.com/D_NQ_NP_2X_876679-MLA46114829792_052021-F.webp' },
+    { name: 'iPhone 12', price: 799, image: 'https://m.media-amazon.com/images/I/71hIfcIPyxS._AC_SX522_.jpg' },
+    { name: 'iPhone 13', price: 850, image: 'https://http2.mlstatic.com/D_NQ_NP_2X_654080-MLA47781882564_102021-F.webp' },
+    { name: 'iPhone 13 PRO', price: 1000, image:'https://http2.mlstatic.com/D_NQ_NP_2X_640945-MLA47778929198_102021-F.webp' },
+    { name: 'iPhone 14', price: 900, image: 'https://http2.mlstatic.com/D_NQ_NP_2X_881016-MLM51559383738_092022-F.webp' },
+    { name: 'iPhone 14 PRO', price:1150, image: 'https://http2.mlstatic.com/D_NQ_NP_2X_651710-MLM51559386433_092022-F.webp' },
+    { name: 'iPhone 14 PRO MAX', price:1350, image: 'https://http2.mlstatic.com/D_NQ_NP_2X_782867-MLA69912981355_062023-F.webp' },
   ];
 
   const cart = []; // Array para almacenar los productos del carrito
@@ -64,10 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Función para crear una card de producto
+  // Función para crear la card de producto
   function createCard(product) {
     const card = document.createElement('div');
-    card.classList.add('card', 'col-md-3', 'm-2');
+    card.classList.add('card', 'col-md-3', 'm-2')
 
     const image = document.createElement('img');
     image.src = product.image;
@@ -130,6 +90,14 @@ document.addEventListener('DOMContentLoaded', function() {
       li.textContent = product.name;
       cartItems.appendChild(li);
     });
+
+    // Render total price
+    const totalPrice = document.getElementById('total-price')
+    totalPrice.innerHTML = '';
+    const total = cart.reduce((sum, product) => sum + product.price, 0);
+    if (total != 0) {
+      totalPrice.innerHTML = `Total: U$S ${total}`;
+    }
   }
 
   // Función para calcular el precio total del carrito
