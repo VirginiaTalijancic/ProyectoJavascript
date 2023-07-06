@@ -103,7 +103,6 @@
     saveCart();
     displayCart();
     calculateTotal();
-    alert('¡Gracias por tu compra!');
   }
 
   
