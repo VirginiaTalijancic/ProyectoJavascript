@@ -8,7 +8,8 @@
     {
         "name":"iPhone XR",
         "price":600,
-        "image":"https://http2.mlstatic.com/D_NQ_NP_2X_641854-MLA46544656693_062021-F.webp"
+        "image":"https://http2.mlstatic.com/D_NQ_NP_2X_901394-MLA46545234226_062021-F.webp"
+        
     },
 
     {
@@ -50,7 +51,7 @@
     {
         "name":"iPhone 14 PRO MAX",
         "price":1350,
-        "image":"https://http2.mlstatic.com/D_NQ_NP_2X_782867-MLA69912981355_062023-F.webp"  
+        "image":"https://http2.mlstatic.com/D_NQ_NP_2X_770607-MLM51559385328_092022-F.webp"  
     }
 
 ]
