@@ -97,7 +97,6 @@ function calculateTotal() {
   document.getElementById('total-price').textContent = `$${total}`;
 }
 
-
 function checkout() {
   cart.length = 0;
   saveCart();
@@ -105,9 +104,7 @@ function checkout() {
   calculateTotal();
 }
 
-
 const checkoutBtn = document.getElementById('checkout-btn');
 checkoutBtn.addEventListener('click', checkout);
-
 
 loadCart();
